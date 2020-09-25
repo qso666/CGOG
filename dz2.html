@@ -1,0 +1,33 @@
+<HTML>
+<BODY>
+<canvas id='dz21' height='450' width='600' style='border:3px solid'>
+</canvas>
+<canvas id='dz22' height='450' width='600' style='border:3px solid'>
+</canvas>
+<a href='#' id='clk' class='clickhere' style='font-size: 200%'>clickhere</a>
+<script>
+	var canvas = document.getElementById('dz21');
+	var ctx = canvas.getContext('2d');
+	var canvas2 = document.getElementById('dz22');
+	var ctx2 = canvas2.getContext('2d');
+	var img = new Image();
+	img.src = 'NissanS13.jpg';
+	img.onload = function() {
+		ctx.drawImage(img, 0, 0);
+	};
+	var grayscale = function() {
+		var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		for(var i = 0; i < imageData.data.length; i += 4){
+            var avg = (imageData.data[i] + imageData.data[i + 1] + imageData.data[i + 2]) / 3;  
+            imageData.data[i] = avg;   
+            imageData.data[i + 1] = avg;   
+            imageData.data[i + 2] = avg;  
+		}
+		ctx2.putImageData(imageData, 0, 0);
+	};
+	var grayscalebtn = document.getElementById('clk');
+	grayscalebtn.addEventListener('click', grayscale);
+
+</script>
+</BODY>
+</HTML>

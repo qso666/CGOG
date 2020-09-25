@@ -1,0 +1,57 @@
+<HTML>
+<BODY>
+<canvas id='dz3' height='450' width='600' style='border:3px solid'>
+</canvas>
+<script>
+	var canvas = document.getElementById('dz3');
+	var ctx = canvas.getContext('2d');
+	function line(ctx,x1,y1,x2,y2)
+		{
+			var deltaX = Math.abs(x2 - x1);
+			var deltaY = Math.abs(y2 - y1);
+			var signX;
+			var signY;
+			var error = deltaX - deltaY;
+			if(x1 < x2)
+				signX = 1;
+			else
+				signX = -1;
+			if(y1 < y2)
+				signY = 1;
+			else
+				signY = -1;
+			while(x1 != x2 || y1 != y2) 
+			{
+				ctx.fillRect(x1,y1,1,1);
+				var error2 = error * 2;
+				if(error2 > -deltaY) 
+				{
+					error -= deltaY;
+					x1 += signX;
+				}
+				if(error2 < deltaX) 
+				{
+					error += deltaX;
+					y1 += signY;
+				}
+			}
+		}
+	let point_index=0;
+	canvas.addEventListener('click',function(e)
+		{
+			if(point_index == 0){
+				x1=e.offsetX;
+				y1=e.offsetY;
+				point_index = 1;
+			} 
+			else 
+			{
+				x2=e.offsetX;
+				y2=e.offsetY;
+				line(ctx,x1,y1,x2,y2);
+				point_index = 0;
+			}
+		});
+</script>
+</BODY>
+</HTML>
